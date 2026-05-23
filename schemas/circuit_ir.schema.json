@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/proteusgen/circuit_ir.schema.json",
+  "title": "CircuitIR",
+  "type": "object",
+  "required": ["version", "target", "circuit"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {"type": "string"},
+    "target": {
+      "type": "object",
+      "required": ["proteus_version", "style"],
+      "additionalProperties": false,
+      "properties": {
+        "proteus_version": {"type": "string", "examples": ["8.13"]},
+        "style": {"type": "string", "enum": ["terminal_based"]}
+      }
+    },
+    "circuit": {
+      "type": "object",
+      "required": ["name", "components", "nets", "connections"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string"},
+        "components": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/component"}
+        },
+        "nets": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/net"}
+        },
+        "connections": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/connection"}
+        },
+        "layout_hints": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "$defs": {
+    "component": {
+      "type": "object",
+      "required": ["ref", "part"],
+      "additionalProperties": false,
+      "properties": {
+        "ref": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$"},
+        "part": {"type": "string"},
+        "value": {"type": "string"},
+        "metadata": {"type": "object", "additionalProperties": true}
+      }
+    },
+    "net": {
+      "type": "object",
+      "required": ["name", "kind"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "pattern": "^[A-Za-z0-9_+./-]+$"},
+        "kind": {"type": "string", "enum": ["power", "ground", "input", "output", "internal"]}
+      }
+    },
+    "connection": {
+      "type": "object",
+      "required": ["component", "pin", "net"],
+      "additionalProperties": false,
+      "properties": {
+        "component": {"type": "string"},
+        "pin": {"type": "string"},
+        "net": {"type": "string"}
+      }
+    }
+  }
+}
