@@ -1,0 +1,60 @@
+{
+  "schema_version": "0.1",
+  "policy": "Do not use sources that produced opening/fatal errors, except BIG08's CLOCK model error which is allowed as a known component-model issue rather than a container/source failure.",
+  "removed_from_local_mnt_data": [
+    "BIG_CIRCUIT_TRIALS_PACK.zip",
+    "BIG_CIRCUIT_TRIALS_V813_PATCHED.zip",
+    "BIG_CIRCUIT_TRIALS_V813_DSN_PATCHED.zip",
+    "BIG_CIRCUIT_TRIALS_V813_DSN_PATCHED (1).zip",
+    "P2_LEVEL1_AMBITIOUS_TRIALS_PACK.zip",
+    "P2_LEVEL1_EMPTY_SHEET_NAND_TRIALS_PACK.zip",
+    "P2_LEVEL1_E001_ICS_7SEG_BIG_LEAP_PACK.zip",
+    "P2_LEVEL1_NO_DLD_E001_SOURCE_TRIALS_PACK.zip",
+    "DLD-Proteus.zip",
+    "DLD-Proteus (1).zip",
+    "Lab13.pdsprj.zip",
+    "LV1.zip",
+    "PHASE1_MICROTESTS_EDITED_FILES.zip",
+    "mICROTESTS.zip"
+  ],
+  "cleaned_replacements": [
+    {
+      "old": "assignment4.zip",
+      "new": "assignment4_clean_nonerror.zip",
+      "removed_entry": "metal_detector.pdsprj",
+      "reason": "metal detector control also produced VGDVC.DLL access violation"
+    }
+  ],
+  "do_not_use_sources": [
+    {
+      "name": "MT04_DSN_four_resistors_NO_CDB_FILE",
+      "reason": "Fatal ISIS.DLL error; proves ROOT.CDB must exist"
+    },
+    {
+      "name": "BIG04_metal_detector_pic_lcd_empty_cdb / metal_detector.pdsprj",
+      "reason": "VGDVC.DLL access violation; control also failed"
+    },
+    {
+      "name": "BIG07_level1_7seg_logicprobe_empty_cdb / LV1 source",
+      "reason": "Control and generated test failed/crashed"
+    },
+    {
+      "name": "BIG10_hybrid_home_theater_dsn_clock_cdb",
+      "reason": "Generated hybrid failed while control opened; foreign CDB unsafe"
+    },
+    {
+      "name": "DLDLab13 / DLD-Proteus family",
+      "reason": "Repeated ISIS issues in later generated packs; avoid until separately isolated"
+    }
+  ],
+  "allowed_with_caution": [
+    {
+      "name": "BIG08 JK/DLD clock-related source",
+      "reason": "Only CLOCK model error, same in control/test; not treated as project-container failure"
+    },
+    {
+      "name": "ENA analog files",
+      "reason": "Visual/opening worked but empty-CDB test had simulation/model issue; use for visual/corpus only unless model metadata preserved"
+    }
+  ]
+}
