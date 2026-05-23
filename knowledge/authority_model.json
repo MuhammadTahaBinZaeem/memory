@@ -1,0 +1,69 @@
+{
+  "schema_version": "0.1",
+  "models": {
+    "Proteus 8.13": {
+      "container": {
+        "format": "zip-style",
+        "required_files_observed": [
+          "PROJECT.XML",
+          "ROOT.DSN",
+          "ROOT.CDB",
+          "SCRIPTS/PWRRAILS.DAT"
+        ],
+        "notes": [
+          "PROJECT.XML stores release/filever/timestamp metadata.",
+          "Proteus 8.13 observed PROJECT.XML TIMESTAMP RELEASE=813 FILEVER=830."
+        ]
+      },
+      "data_authority": {
+        "visual_object_existence": "ROOT.DSN",
+        "terminal_objects": "ROOT.DSN",
+        "terminal_labels": "ROOT.DSN",
+        "wire_objects": "ROOT.DSN",
+        "topology": "ROOT.DSN",
+        "resistor_values": "ROOT.CDB",
+        "resistor_reference_names": "ROOT.CDB",
+        "component_metadata": "ROOT.CDB",
+        "power_rail_script": "copy_from_template_for_current_scope"
+      },
+      "observed_terminal_markers": [
+        "$TERINPUT",
+        "$TEROUTPUT",
+        "$TERPOWER",
+        "$TERGROUND"
+      ],
+      "observed_component_markers": [
+        "RESISTOR",
+        "COMPONENT ID",
+        "COMPONENT VALUE",
+        "PROPERTIES",
+        "WIRE"
+      ],
+      "normalization_behaviors": [
+        "If ROOT.DSN has four resistors and ROOT.CDB has one/minimal metadata, Proteus can show four resistors and rebuild missing metadata on save.",
+        "If ROOT.CDB has extra resistor entries but ROOT.DSN has fewer visual objects, extra CDB entries do not create visible schematic objects.",
+        "For resistor values, CDB-only edits update displayed/property values after Proteus opens/resaves.",
+        "For DSN-only resistor value edits, Proteus can revert displayed values from ROOT.CDB."
+      ],
+      "known_noise": [
+        {
+          "file": "ROOT.DSN",
+          "approx_offsets": [177, 178],
+          "description": "Save/session/timestamp-like noise bytes changed between resaves without meaningful schematic changes."
+        },
+        {
+          "file": "PROJECT.XML",
+          "description": "TIMESTAMP MODIFIED/CREATED-like fields change between saves."
+        }
+      ]
+    },
+    "Proteus 8.16": {
+      "container": {
+        "format": "zip-style",
+        "evidence": "Random ENA project extraction",
+        "observed_release": "816"
+      },
+      "status": "partially_observed_only"
+    }
+  }
+}
