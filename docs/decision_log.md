@@ -1,23 +1,22 @@
 # Decision Log
 
-This file records the reasoning behind major test directions in a concise, shareable form.
+Status: **reset to stable pre-CEP scope**.
 
-It is not private chain-of-thought. It is the project-level rationale that Codex or another contributor needs.
+This file preserves only stable project decisions confirmed before the speculative Project 2 Level 1 trial sequence.
 
 ## D001: Use terminal-based topology first
 
-Decision: avoid long auto-routed wires in early generator versions.
+Decision: prefer terminal/net-label based connections before attempting arbitrary routed wiring.
 
 Reason:
 
-- Proteus terminals with identical names act as virtual connections.
-- User specifically prioritized POWER/GROUND/INPUT/OUTPUT terminals.
-- Terminal labels were confirmed to live in ROOT.DSN.
-- This reduces the first generator from arbitrary routing to repeated branch placement and net naming.
+- Same-name terminals are intended to act as virtual connections in Proteus.
+- Terminal labels were confirmed to be represented in ROOT.DSN.
+- This reduces early generation complexity.
 
 ## D002: Treat ROOT.DSN as visual/topology authority
 
-Decision: generator must create/update ROOT.DSN for visible objects and topology.
+Decision: generation must handle ROOT.DSN for visible objects and topology.
 
 Evidence:
 
@@ -27,71 +26,32 @@ Evidence:
 
 ## D003: Treat ROOT.CDB as component metadata authority
 
-Decision: generator should generate ROOT.CDB for polished output, especially resistor refs/values.
+Decision: ROOT.CDB matters for polished metadata such as resistor refs and values.
 
 Evidence:
 
 - CDB-only resistor value/ref edits were authoritative.
 - DSN-only resistor value/ref edits were normalized back from CDB.
-- Missing CDB entries can sometimes be rebuilt, but refs may be regenerated.
 
-## D004: Use minimal/empty CDB as trial mode, not final mode
+## D004: Patch both PROJECT.XML and ROOT.DSN version fields when targeting Proteus 8.13
 
-Decision: empty CDB is useful for fast tests, but final generator should not rely on it for clean output.
-
-Evidence:
-
-- Big trials with empty CDB opened for many single-sheet circuits.
-- Proteus rebuilt metadata after open/save.
-- Refs were often regenerated/reordered.
-- Multi-sheet projects collapsed to fewer visible sheets.
-
-## D005: Avoid multi-sheet generation in v0
-
-Decision: first generator target should be single-sheet circuits.
+Decision: target-version normalization requires both PROJECT.XML and ROOT.DSN header fields.
 
 Evidence:
 
-- Empty CDB caused a 6-sheet clock project to show only first sheet.
-- Foreign CDB exposed wrong sheet count.
-- Multi-sheet support requires CDB sheet metadata handling.
+- PROJECT.XML-only patch did not remove the later-version warning.
+- ROOT.DSN header patch at offsets 167/169 removed the warning in the repack control.
 
-## D006: Patch both PROJECT.XML and ROOT.DSN version fields
+## D005: Use E001 empty project as the default clean base only when generation resumes
 
-Decision: generated projects targeting Proteus 8.13 must patch both places.
-
-Evidence:
-
-- PROJECT.XML-only patch did not remove ROOT.DSN later-version warning.
-- ROOT.DSN header patch at offsets 167/169 removed warning in the repack control.
-
-## D007: Use E001 empty project as default base
-
-Decision: use the user-provided E001 empty project as the default base shell for future single-sheet trials.
+Decision: prefer the user-provided E001 empty project as base because it is known-good Proteus 8.13.
 
 Reason:
 
-- It is known-good Proteus 8.13.
-- It has clean PROJECT.XML and ROOT.DSN version metadata.
+- It has clean PROJECT.XML metadata.
+- It has clean ROOT.DSN version fields.
 - It has minimal ROOT.CDB.
-- A previous later-version DLDLab13 base caused every derived test to fail before testing the generated content.
 
-## D008: Move from tiny tests to staged hit-and-test trials
+## Inactive / removed
 
-Decision: after authority rules were confirmed, generate larger staged trial packs.
-
-Reason:
-
-- Repeating CDB/DSN authority tests became redundant.
-- The user can test generated packs faster than manually building many circuits.
-- Big trials reveal whether whole-circuit DSN-heavy generation is viable.
-
-## D009: Keep natural-language planning separate from generator
-
-Decision: generator input is CircuitIR JSON, not free-form English.
-
-Reason:
-
-- Any LLM can later generate CircuitIR.
-- Validator can enforce correctness before generation.
-- Deterministic generator stays testable and independent of a specific model.
+The earlier post-CEP decisions about large speculative Project 2 Level 1 packs, no-DLD packs, and big-leap circuit assembly have been removed from active memory. Rebuild that direction only with explicit user guidance.
