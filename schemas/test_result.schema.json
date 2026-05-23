@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/proteusgen/test_result.schema.json",
+  "title": "ProteusGenerationTestResult",
+  "type": "object",
+  "required": ["test_id", "proteus_version", "opened", "result_summary"],
+  "additionalProperties": false,
+  "properties": {
+    "test_id": {"type": "string"},
+    "generated_file": {"type": "string"},
+    "proteus_version": {"type": "string"},
+    "opened": {"type": "boolean"},
+    "fatal_error": {"type": "boolean"},
+    "warnings": {"type": "array", "items": {"type": "string"}},
+    "visual_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "correct_component_count": {"type": "boolean"},
+        "wrong_components": {"type": "array", "items": {"type": "string"}},
+        "missing_components": {"type": "array", "items": {"type": "string"}},
+        "notes": {"type": "string"}
+      }
+    },
+    "properties_checked": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ref"],
+        "additionalProperties": false,
+        "properties": {
+          "ref": {"type": "string"},
+          "expected_value": {"type": "string"},
+          "actual_value": {"type": "string"},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "simulation_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ran": {"type": "boolean"},
+        "worked": {"type": "boolean"},
+        "notes": {"type": "string"}
+      }
+    },
+    "resaved_file": {"type": "string"},
+    "human_notes": {"type": "string"},
+    "result_summary": {"type": "string"}
+  }
+}
