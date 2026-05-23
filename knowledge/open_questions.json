@@ -1,0 +1,61 @@
+{
+  "schema_version": "0.1",
+  "open_questions": [
+    {
+      "id": "Q001",
+      "priority": "high",
+      "question": "What is the exact ROOT.DSN template structure needed to add additional visible resistor objects from known-good user-created templates?",
+      "status": "pending_60_tests",
+      "needed_for": ["resistor_generator_v0"]
+    },
+    {
+      "id": "Q002",
+      "priority": "high",
+      "question": "How are resistor, terminal, and short-wire coordinates represented in ROOT.DSN?",
+      "status": "pending_60_tests",
+      "needed_for": ["layout_generation"]
+    },
+    {
+      "id": "Q003",
+      "priority": "high",
+      "question": "Can a full resistor unit terminal--resistor--terminal be reused safely by editing labels, refs, values, and coordinates?",
+      "status": "pending_60_tests",
+      "needed_for": ["resistor_generator_v0"]
+    },
+    {
+      "id": "Q004",
+      "priority": "medium",
+      "question": "Can terminals be placed directly on resistor pins, or are short wire stubs required?",
+      "status": "pending_60_tests",
+      "needed_for": ["simplified_terminal_based_layout"]
+    },
+    {
+      "id": "Q005",
+      "priority": "medium",
+      "question": "What is the minimum valid ROOT.CDB seed for generated resistor circuits?",
+      "status": "pending_60_tests",
+      "needed_for": ["packer_generator_v0"]
+    },
+    {
+      "id": "Q006",
+      "priority": "medium",
+      "question": "Which ZIP compression methods and internal file orderings does Proteus accept for .pdsprj repacks?",
+      "status": "pending_60_tests",
+      "needed_for": ["repacking_stability"]
+    },
+    {
+      "id": "Q007",
+      "priority": "medium",
+      "question": "How should duplicate resistor references and duplicate terminal labels be handled by validator rules?",
+      "status": "pending_60_tests",
+      "needed_for": ["validator_v0"]
+    },
+    {
+      "id": "Q008",
+      "priority": "high_later",
+      "question": "What controlled one-component tests are required for DC source, AC source, inductor, capacitor, LED, switch, clock, logic probe, and basic 74xx ICs?",
+      "status": "after_resistor_v0",
+      "needed_for": ["component_expansion"]
+    }
+  ]
+}
