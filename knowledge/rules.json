@@ -1,0 +1,68 @@
+{
+  "schema_version": "0.1",
+  "rules": [
+    {
+      "id": "R001",
+      "title": "PDSPrj is ZIP-style container",
+      "status": "confirmed",
+      "confidence": 0.99,
+      "applies_to": ["Proteus 8.13", "Proteus 8.16"],
+      "evidence": ["p8_13 phase 1 extraction", "p8_16 ENA extraction"],
+      "rule": ".pdsprj files begin with PK and contain internal project files such as PROJECT.XML, ROOT.DSN, ROOT.CDB, and SCRIPTS/PWRRAILS.DAT."
+    },
+    {
+      "id": "R002",
+      "title": "ROOT.DSN controls visual object existence",
+      "status": "confirmed",
+      "confidence": 0.96,
+      "applies_to": ["Proteus 8.13"],
+      "evidence": ["MT01", "MT02", "MT03", "MT05", "Batch02 topology comparisons"],
+      "rule": "Components visible in ROOT.DSN appear in Proteus even if ROOT.CDB is missing entries; CDB-only components do not create visible schematic objects."
+    },
+    {
+      "id": "R003",
+      "title": "ROOT.CDB controls resistor values and references",
+      "status": "confirmed",
+      "confidence": 0.98,
+      "applies_to": ["Proteus 8.13"],
+      "evidence": ["TEST_A", "TEST_B", "TEST_C", "MT06", "MT07", "MT08", "MT09", "MT10", "MT11"],
+      "rule": "For existing resistors, ROOT.CDB is authoritative for value and reference designator. ROOT.DSN display metadata can be normalized from ROOT.CDB on open/save."
+    },
+    {
+      "id": "R004",
+      "title": "Terminal labels live in ROOT.DSN",
+      "status": "confirmed",
+      "confidence": 0.98,
+      "applies_to": ["Proteus 8.13"],
+      "evidence": ["TEST_D1", "TEST_D2", "Batch02 terminal-only projects", "MT12"],
+      "rule": "INPUT, OUTPUT, POWER, and GROUND terminal objects and labels are stored in ROOT.DSN. Terminal-only changes do not alter ROOT.CDB."
+    },
+    {
+      "id": "R005",
+      "title": "Topology is ROOT.DSN-controlled",
+      "status": "confirmed",
+      "confidence": 0.95,
+      "applies_to": ["Proteus 8.13"],
+      "evidence": ["B02_E007 series vs B02_E008 parallel", "MT12", "MT13", "MT14"],
+      "rule": "Series/parallel/ladder topology changes are represented in ROOT.DSN through terminal labels, wire stubs, and object layout. ROOT.CDB can remain identical across different topologies with the same component refs/values."
+    },
+    {
+      "id": "R006",
+      "title": "ROOT.CDB must exist",
+      "status": "confirmed",
+      "confidence": 0.95,
+      "applies_to": ["Proteus 8.13"],
+      "evidence": ["MT04"],
+      "rule": "Removing ROOT.CDB entirely causes fatal Proteus/ISIS failure. A generator must include ROOT.CDB, even if minimal."
+    },
+    {
+      "id": "R007",
+      "title": "PWRRAILS.DAT unchanged in early terminal/passive tests",
+      "status": "confirmed_for_scope",
+      "confidence": 0.9,
+      "applies_to": ["Proteus 8.13", "early resistor/terminal scope"],
+      "evidence": ["Phase1 terminal tests", "Batch02 resistor networks"],
+      "rule": "Visible VCC/GND terminals and resistor networks did not modify SCRIPTS/PWRRAILS.DAT. For early generator versions, copy this file unchanged from a template."
+    }
+  ]
+}
