@@ -7,6 +7,9 @@ This folder stores long-form human-readable learning documents for the Proteus g
 The following files were generated in the ChatGPT sandbox and should be copied into this folder manually if binary storage is required:
 
 ```text
+resistor_E0_R1_R2_R3_R4_pattern_comparison.pdf
+resistor_E0_R1_R2_R3_R4_full_byte_diff_no_green.pdf
+resistor_E0_R1_R2_R3_R4_diff_no_green_artifacts.zip
 resistor_E001_R1_R4_full_comparison.pdf
 resistor_E001_R1_R4_diff_only_with_generated_attempt.pdf
 resistor_diff_only_with_generated_attempt_artifacts.zip
