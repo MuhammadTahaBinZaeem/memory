@@ -1,18 +1,34 @@
-# litpaper Cleanup Needed for Proteus-Generator Files
+# litpaper Cleanup / Migration Record for Proteus-Generator Files
 
 ## Reason
 
-Some Proteus native-project-generator / reverse-engineering notes were accidentally committed to `MuhammadTahaBinZaeem/litpaper`. They belong in `MuhammadTahaBinZaeem/memory`.
+Proteus native-project-generator / reverse-engineering notes were accidentally committed to `MuhammadTahaBinZaeem/litpaper`. They belong in `MuhammadTahaBinZaeem/memory`.
 
-A migration script has been added at:
+The correct active repo for this work is:
+
+```text
+MuhammadTahaBinZaeem/memory
+```
+
+## Migration safety
+
+A migration script exists at:
 
 ```text
 tools/migrate_proteus_from_litpaper.sh
 ```
 
-Run that script from a local clone of `memory` to pull the accidental files from `litpaper` into `memory` before deletion.
+It is pinned to the old `litpaper` commit that still contained the accidental Proteus files:
 
-## Files found in litpaper that should be migrated/removed
+```text
+25c86b0a0d0574f63728a13cf3f30fe2f4f7147f
+```
+
+So even after cleaning `litpaper/main`, the files can still be recovered from Git history if needed.
+
+## Cleanup completed on litpaper/main
+
+The following misplaced Proteus files were removed from `MuhammadTahaBinZaeem/litpaper` on `main`:
 
 ```text
 docs/generator_method/r21_resistor_terminal_generator_v9_canonical_method.md
@@ -43,9 +59,37 @@ experiments/generation_code/r21_terminal_network_v5_correct_object_boundaries.py
 experiments/generation_code/r21_terminal_network_v6_fixed_terminal_label_patch.py
 ```
 
-## Current-session repair status
+The current-session bad base64 artifact chunk was also removed from `litpaper`:
 
-Done in `memory`:
+```text
+artifacts/proteus_v9_recovery/R21_E001_B02_V9_NO_PREMATURE_TERMINATORS.zip.b64.part01.txt
+```
+
+## Direct verification completed
+
+After deletion, representative direct `main` checks returned `404 Not Found` for:
+
+```text
+docs/generator_method/r21_resistor_terminal_generator_v9_canonical_method.md
+experiments/v9_no_premature_terminators_note.md
+experiments/r21_terminal_network_v4_results_and_v5_boundary_fix.md
+experiments/reference_strategy_component_vs_combination.md
+docs/public_black_box_methodology/README.md
+docs/public_black_box_methodology/02_black_box_experiment_protocol.md
+docs/public_black_box_methodology/01_problem_statement.md
+experiments/generation_code/r21_terminal_network_v3_terminal_field_fix.py
+experiments/generation_code/r21_terminal_network_v4_order_suffix_diagnostics.py
+experiments/generation_code/r21_terminal_network_v5_correct_object_boundaries.py
+experiments/generation_code/r21_terminal_network_v6_fixed_terminal_label_patch.py
+experiments/r21_terminal_network_v1_failure_and_v2_fix.md
+experiments/final_r21_e001_terminal_network_generation.md
+```
+
+Note: GitHub code search may temporarily show stale results from older commits even after `main` no longer contains the files. Direct `fetch_file` checks against `ref=main` were used for verification.
+
+## Current memory-side records
+
+The following records now exist in `memory`:
 
 ```text
 artifacts/proteus_v9_recovery/README.md
@@ -53,22 +97,6 @@ experiments/v9_no_premature_terminators_note.md
 tools/migrate_proteus_from_litpaper.sh
 docs/reports/litpaper_cleanup_needed.md
 ```
-
-Attempted cleanup in `litpaper`:
-
-```text
-artifacts/proteus_v9_recovery/R21_E001_B02_V9_NO_PREMATURE_TERMINATORS.zip.b64.part01.txt
-```
-
-This accidentally-created current-session chunk was removed from `litpaper`.
-
-Blocked cleanup:
-
-```text
-experiments/v9_no_premature_terminators_note.md
-```
-
-The GitHub connector blocked the destructive delete call for this file, so final litpaper cleanup may need to be done locally or via GitHub web UI after migration is verified.
 
 ## Correct continuation point
 
