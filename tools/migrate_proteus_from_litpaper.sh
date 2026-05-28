@@ -4,9 +4,13 @@ set -euo pipefail
 # This script migrates Proteus-generator files that were accidentally committed to
 # MuhammadTahaBinZaeem/litpaper into this repository.
 # Run from the root of MuhammadTahaBinZaeem/memory.
+#
+# Important: SOURCE_REF is pinned to the litpaper commit that still contained the
+# accidental Proteus files after the bad current-session base64 chunk had been
+# removed. Do not use main, because main is being cleaned.
 
 SOURCE_REPO="MuhammadTahaBinZaeem/litpaper"
-SOURCE_REF="main"
+SOURCE_REF="25c86b0a0d0574f63728a13cf3f30fe2f4f7147f"
 RAW_BASE="https://raw.githubusercontent.com/${SOURCE_REPO}/${SOURCE_REF}"
 
 FILES=(
