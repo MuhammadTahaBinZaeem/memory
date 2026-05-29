@@ -1,6 +1,8 @@
 # Codex Generator Requirements
 
-This file defines what Codex should implement for v1 of the resistor-only JSON-to-Proteus generator.
+This file defines what Codex should implement for the **general resistor + input/output terminal JSON-to-Proteus generator**.
+
+This is not a generator for one fixed 6R circuit. The corrected 6R circuit is only a required test fixture.
 
 ## Goal
 
@@ -8,9 +10,59 @@ Build a local generator that reads a JSON file following:
 
 ```text
 final/json_circuit_ir_spec.md
+final/general_resistor_terminal_generator_spec.md
 ```
 
 and writes a Proteus 8.13 `.pdsprj` project using the locked V9 method.
+
+## Scope for this baseline
+
+Supported now:
+
+```text
+arbitrary graph of RESISTOR components
+node labels as generated terminal labels
+one input terminal object per resistor left endpoint
+one output terminal object per resistor right endpoint
+short wire objects between terminals and resistor pins
+CDB resistor records
+blank E001 base
+```
+
+Not supported yet:
+
+```text
+power terminal component
+ground terminal component
+capacitor
+inductor
+DC source
+AC source
+rotated resistor physical symbols
+long node labels such as GND or VCC
+long refs such as R10
+```
+
+## Empty E001 base requirement
+
+The generator must use the blank E001 base for every output.
+
+Use from E001:
+
+```text
+PROJECT.XML
+SCRIPTS/PWRRAILS.DAT
+empty project shell defaults
+```
+
+Generate/replace:
+
+```text
+ROOT.CDB
+ROOT.DSN
+```
+
+Do not use the 6R fixture or R21 fixture as the base project.
 
 ## Command-line interface
 
@@ -63,8 +115,8 @@ For each component in JSON order:
 ```text
 1. allocate group id
 2. allocate input/output link suffix ids
-3. create input terminal object for nodes[0]
-4. create output terminal object for nodes[1]
+3. create input terminal object for component.nodes[0]
+4. create output terminal object for component.nodes[1]
 5. create resistor visual object with matching suffix ids
 6. create left wire object
 7. create right wire object
@@ -113,13 +165,13 @@ generator_target
 base_project
 output_basename
 output_files
+node_count_requested
 component_count_requested
 component_count_emitted_cdb
 component_count_emitted_dsn
 terminal_count
 wire_count
 object_group_count
-node_count
 terminator_validation
 link_suffix_validation
 section_pointer_values
@@ -128,7 +180,7 @@ known_limitations
 output_hashes
 ```
 
-## Test fixture
+## Required test fixture
 
 The first required fixture is:
 
@@ -147,19 +199,7 @@ R5: N3 - N4
 R6: N0 - N4
 ```
 
-Expected successful output basename:
-
-```text
-HANDDRAWN_6R_CORRECTED_N0_N1_N2_N3_N4
-```
-
-The generator output should be compared against the recorded successful artifact when possible:
-
-```text
-project_sha256: 2f5eb8226c825736ca5ff15dd48177c3c5b9c52364f9eeea9f2bf9ba62018476
-```
-
-Exact byte equality may not be required if the generator intentionally changes metadata, timestamps, or layout, but topology and static validation must match.
+This fixture proves the generator can handle a nontrivial resistor graph. It must not be hardcoded.
 
 ## Tests Codex should create
 
@@ -167,12 +207,13 @@ Required tests:
 
 ```text
 valid handdrawn_6r_corrected.json passes validation
+additional arbitrary resistor graph JSON passes validation
 all expected output files are created
-component count is 6
-node count is 5
-terminal count is 12
-wire count is 12
-object group count is 6
+component count matches JSON
+node count matches JSON
+terminal count equals resistor_count * 2
+wire count equals resistor_count * 2
+object group count equals resistor_count
 no premature final terminator exists
 final object has final terminator
 all suffix consistency checks pass
@@ -218,4 +259,4 @@ variable-length terminal labels
 variable-length visible refs such as R10
 ```
 
-These are planned next milestones, not part of the current locked resistor-only baseline.
+These are planned next milestones, not part of the current locked resistor + endpoint-terminal baseline.
