@@ -1,55 +1,89 @@
 # Component Roadmap After Locked Resistor Baseline
 
-The locked baseline is resistor-only.
+This roadmap tracks component support after the locked resistor + endpoint-terminal baseline.
 
-Do not merge new component support into the main generator until each item has its own controlled experiment, notes, JSON extension, generated artifact, validation manifest, and user-tested result.
-
-## Current locked baseline
+## Current locked support
 
 ```text
 RESISTOR: two-terminal, CDB-backed, V9 linked terminal/resistor/wire group
+POWER_TERMINAL: working with two locked methods
 ```
 
-## Planned order
+## Power terminal status
+
+Power terminal is now working and locked with two methods:
 
 ```text
-1. power terminal
-2. ground terminal
-3. capacitor
-4. inductor
-5. DC power source
-6. AC power source
-7. v1 actual generator release
+1. Short-wire endpoint method
+   final/power_terminal_short_wire_method.md
+
+2. Donor-derived output-bridge method
+   final/power_terminal_output_bridge_method.md
 ```
 
-## Milestone 1: power terminal
-
-Required work:
+The failed hand-built bridge method is recorded and must not be used:
 
 ```text
-identify stable Proteus power terminal object family
-confirm label/value constraints
-confirm CDB interaction if any
-confirm connection behavior with resistor network
-update JSON spec with terminal component/node role
-create simple test circuit
-record artifact and manifest
+experiments/power_terminal_output_bridge_2026-05-29/test_result_vgdvc_failure.md
 ```
 
-Possible JSON extension later:
+## Remaining planned order
+
+```text
+1. ground terminal
+2. capacitor
+3. inductor
+4. DC power source
+5. AC power source
+6. v1 actual generator release
+```
+
+## Completed Milestone: power terminal
+
+Confirmed working methods:
+
+```text
+$TERPOWER(node) -> short wire -> resistor pin
+
+donor-derived bridge cluster containing $TERPOWER and $TEROUTPUT(node), then same-name node connection to circuit
+```
+
+Requirements satisfied:
+
+```text
+identified marker: $TERPOWER
+confirmed ROOT.DSN visual authority
+confirmed no CDB record required in current observed method
+confirmed connection behavior with resistor network by user testing
+recorded artifacts and manifests
+locked final method docs
+```
+
+Power terminal JSON extension target:
+
+```json
+{
+  "ref": "P1",
+  "type": "POWER_TERMINAL",
+  "node": "N1",
+  "label": "N1",
+  "connection_style": "donor_output_bridge"
+}
+```
+
+Alternative locked style:
 
 ```json
 {
   "ref": "P1",
   "type": "POWER_TERMINAL",
   "node": "V0",
-  "label": "VCC"
+  "label": "V0",
+  "connection_style": "short_wire_endpoint"
 }
 ```
 
-Not locked yet.
-
-## Milestone 2: ground terminal
+## Next Milestone: ground terminal
 
 Required work:
 
@@ -75,7 +109,7 @@ Possible JSON extension later:
 
 Not locked yet.
 
-## Milestone 3: capacitor
+## Milestone: capacitor
 
 Required work:
 
@@ -101,7 +135,7 @@ Possible JSON extension later:
 
 Not locked yet.
 
-## Milestone 4: inductor
+## Milestone: inductor
 
 Required work:
 
@@ -127,7 +161,7 @@ Possible JSON extension later:
 
 Not locked yet.
 
-## Milestone 5: DC power source
+## Milestone: DC power source
 
 Required work:
 
@@ -155,7 +189,7 @@ Possible JSON extension later:
 
 Not locked yet.
 
-## Milestone 6: AC power source
+## Milestone: AC power source
 
 Required work:
 
