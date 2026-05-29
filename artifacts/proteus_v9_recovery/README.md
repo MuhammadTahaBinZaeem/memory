@@ -3,6 +3,7 @@
 ## Status
 
 This directory records the recovered V9 Proteus Route A artifact after the old ChatGPT thread reached its message limit.
+The uploaded bundle is now preserved in this repository, along with a flattened extraction of all nested ZIP contents.
 
 The uploaded local bundle was:
 
@@ -66,6 +67,38 @@ generation_code_used.py
 manifest.json
 ```
 
+## Preserved Files
+
+The original uploaded bundle is stored at:
+
+```text
+artifacts/proteus_v9_recovery/source/R21_E001_B02_V9_NO_PREMATURE_TERMINATORS_2.zip
+```
+
+All files from the ten nested ZIP artifacts were extracted into:
+
+```text
+artifacts/proteus_v9_recovery/files/
+```
+
+Each extracted file was renamed with its nested ZIP/folder name as a prefix, using this form:
+
+```text
+<nested_zip_name_without_extension>__<original_inner_file_path>
+```
+
+This preserves duplicate inner names such as `manifest.json`, `topology_map.json`, and `generation_code_used.py` without collisions.
+
+Extraction summary:
+
+```text
+nested_zip_count: 10
+extracted_file_count: 229
+manifest: artifacts/proteus_v9_recovery/extraction_manifest.csv
+```
+
+The manifest maps each nested ZIP entry to its renamed repository path and SHA-256 hash.
+
 ## Continuation point
 
 Continue from:
@@ -95,4 +128,4 @@ Immediate validation sequence:
 
 ## Binary preservation note
 
-The actual nested ZIP was verified locally in the ChatGPT runtime. This repository records its exact hash and contents. Store the binary itself through a GitHub Release, Git LFS, or a direct local commit if full artifact preservation is required.
+The binary bundle supplied locally has been committed directly under `artifacts/proteus_v9_recovery/source/`.
