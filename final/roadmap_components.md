@@ -7,11 +7,13 @@ This roadmap tracks component support after the locked resistor + endpoint-termi
 ```text
 RESISTOR: two-terminal, CDB-backed, V9 linked terminal/resistor/wire group
 POWER_TERMINAL: working with two locked methods
+GROUND_TERMINAL: working with short-wire endpoint method only
+PREFERRED_POWER_GROUND_COMBO: power donor bridge + ground short-wire endpoint
 ```
 
 ## Power terminal status
 
-Power terminal is now working and locked with two methods:
+Power terminal is working and locked with two methods:
 
 ```text
 1. Short-wire endpoint method
@@ -27,15 +29,51 @@ The failed hand-built bridge method is recorded and must not be used:
 experiments/power_terminal_output_bridge_2026-05-29/test_result_vgdvc_failure.md
 ```
 
+## Ground terminal status
+
+Ground terminal is working and locked with one method:
+
+```text
+1. Short-wire endpoint method
+   final/ground_terminal_short_wire_method.md
+```
+
+Ground bridge attempts are rejected for now.
+
+Use this preferred combined method when both power and ground are needed:
+
+```text
+Power = exact donor-derived $TERPOWER + $TEROUTPUT bridge
+Ground = $TERGROUND endpoint short-wired directly to resistor pin
+```
+
+Locked combined method:
+
+```text
+final/power_bridge_ground_shortwire_method.md
+```
+
+Rejected ground bridge experiment families:
+
+```text
+experiments/ground_terminal_bridge_2026-05-29/
+experiments/ground_terminal_donor_bridge_2026-05-29/
+experiments/ground_terminal_proper_donor_bridge_2026-05-29/
+experiments/power_bridge_ground_input_bridge_improved_2026-05-29/
+experiments/power_bridge_ground_input_bridge_corrected_2026-05-29/
+experiments/power_bridge_ground_input_bridge_appended_2026-05-29/
+```
+
+Do not revisit ground bridge without a real manually-created Proteus ground-bridge donor.
+
 ## Remaining planned order
 
 ```text
-1. ground terminal
-2. capacitor
-3. inductor
-4. DC power source
-5. AC power source
-6. v1 actual generator release
+1. capacitor
+2. inductor
+3. DC power source
+4. AC power source
+5. v1 actual generator release
 ```
 
 ## Completed Milestone: power terminal
@@ -83,33 +121,40 @@ Alternative locked style:
 }
 ```
 
-## Next Milestone: ground terminal
+## Completed Milestone: ground terminal
 
-Required work:
+Confirmed working method:
 
 ```text
-identify ground terminal object family
-confirm whether GND is visual label, net label, or special object type
-confirm netlisting/simulation behavior
-update JSON spec
-create resistor-to-ground test
-record artifact and manifest
+$TERGROUND(G0) -> short wire -> resistor pin
 ```
 
-Possible JSON extension later:
+Requirements satisfied:
+
+```text
+identified marker: $TERGROUND
+confirmed ROOT.DSN visual authority
+confirmed no CDB record required in current observed method
+confirmed connection behavior with resistor network by user testing
+recorded artifacts and manifests
+locked final method doc
+```
+
+Ground terminal JSON extension target:
 
 ```json
 {
   "ref": "G1",
   "type": "GROUND_TERMINAL",
   "node": "G0",
-  "label": "GND"
+  "label": "G0",
+  "connection_style": "short_wire_endpoint"
 }
 ```
 
-Not locked yet.
+Ground bridge is not supported until a real donor exists.
 
-## Milestone: capacitor
+## Next Milestone: capacitor
 
 Required work:
 
@@ -122,7 +167,7 @@ test capacitor alone and resistor-capacitor network
 update JSON spec
 ```
 
-Possible JSON extension later:
+Possible JSON extension:
 
 ```json
 {
