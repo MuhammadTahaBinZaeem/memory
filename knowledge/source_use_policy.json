@@ -49,6 +49,10 @@
   ],
   "allowed_with_caution": [
     {
+      "name": "D:/arch/outtt",
+      "reason": "Local folder provided by the user on 2026-05-30 containing decompiled Proteus-related .cpp outputs and diagnostic notes. Treat as first-look diagnostic reference for error names, symbols, markers, and file-format clues only. Do not copy proprietary implementation code into the generator, do not modify Proteus executables, do not bypass licensing, and corroborate any generator rule with user-created project behavior before promotion."
+    },
+    {
       "name": "BIG08 JK/DLD clock-related source",
       "reason": "Only CLOCK model error, same in control/test; not treated as project-container failure"
     },
