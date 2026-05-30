@@ -220,7 +220,10 @@ Baseline layout format:
     "R4": {"x": -2540000, "y": 2032000},
     "R5": {"x": -2540000, "y": 508000},
     "R6": {"x": -6350000, "y": -1016000}
-  }
+  },
+  "visual_wires": [
+    {"x1": -6350000, "y1": 5080000, "x2": -2540000, "y2": 5080000}
+  ]
 }
 ```
 
@@ -241,6 +244,7 @@ Every component should have a position.
 If a component is missing a position, set `layout.auto_place` to true so the generator may auto-place it and record that in manifest.json.
 Coordinates are for the first resistor pin / first endpoint.
 Terminal and wire positions are generated relative to the resistor position and orientation using the locked V9 offsets.
+layout.visual_wires may be used for explicit visible buses or bridge/junction links. These are drawing hints; component nodes remain the electrical authority.
 ```
 
 ## metadata object

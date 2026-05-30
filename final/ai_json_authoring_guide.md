@@ -183,6 +183,8 @@ For a locked vertical symbol, add:
 "visual": {"orientation_hint": "vertical"}
 ```
 
+If the physical drawing needs a visible bus, rail, bridge link, or delta closure after the component nodes are correct, add explicit `layout.visual_wires` entries. Do not use visual wires to invent electrical connectivity that is not already represented by shared node ids.
+
 ### Mistake: Using long labels
 
 Wrong:
@@ -233,6 +235,7 @@ all components have exactly two nodes
 no hidden junction was collapsed through a resistor
 topology matches the circuit, not merely the drawing shape
 layout positions exist for every resistor
+optional layout.visual_wires match intended visible bus or bridge links
 V0 power endpoint, if used, is on nodes[0]
 G0 ground endpoint, if used, is on nodes[1]
 ```

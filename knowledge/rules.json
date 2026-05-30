@@ -99,6 +99,15 @@
       "applies_to": ["Proteus 8.13", "resistor terminal V9 method"],
       "evidence": ["public Proteus sample corpus scan", "REQUESTED_RESISTOR_NETWORKS_15_ORIENTED_STATIC_20260530"],
       "rule": "In the V9 resistor visual record, the four bytes after the final model placement x/y pair store rotation as a signed tenths-of-degrees value in the low 16 bits. 0 is horizontal; -900 is vertical down. Vertical generation must rotate terminal/wire endpoint positions along the same axis."
+    },
+    {
+      "id": "R012",
+      "title": "Standalone visual wires may extend resistor layouts",
+      "status": "confirmed_for_static_generation",
+      "confidence": 0.78,
+      "applies_to": ["Proteus 8.13", "resistor terminal V9 method"],
+      "evidence": ["REQUESTED_RESISTOR_NETWORKS_15_ORIENTED_VISUAL_WIRES_STATIC_20260530"],
+      "rule": "After resistor endpoint groups, the generator may append standalone WIRE records for explicit layout.visual_wires while preserving one final object-stream terminator. These wires provide visible bus/junction geometry and do not replace the CircuitIR component node topology."
     }
   ]
 }

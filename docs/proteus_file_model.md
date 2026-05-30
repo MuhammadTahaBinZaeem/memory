@@ -42,6 +42,12 @@ Public Proteus sample projects show that the resistor visual record stores rotat
 
 The current main generator patches this field for locked 90-degree orientations. For `visual.orientation_hint = "vertical"`, the first resistor pin remains at the component position and the second pin is generated at `y - 1270000`; the terminal and short-wire endpoint records are generated along the same vertical axis.
 
+## Standalone Visual Wires
+
+The current generator also supports optional `layout.visual_wires` entries. These create standalone visible `WIRE` records after the resistor endpoint groups while preserving one final object-stream terminator.
+
+Use these records for drawn buses and comparison links such as parallel rails, bridge cross-links, delta closure, and R-2R ladder bus segments. They are drawing geometry only; the component `nodes` arrays remain the electrical/topological authority.
+
 ## Power And Ground Endpoint Rule
 
 Current supported labels:

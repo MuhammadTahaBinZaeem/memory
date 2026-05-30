@@ -4,7 +4,7 @@
 
 The user correctly objected that the first 15 requested resistor-network batch still emitted horizontal resistor symbols, so bridge/star/ladder layouts were not visually representative.
 
-This follow-up batch verifies a generator update that writes real Proteus resistor rotation fields and generates vertical endpoint stubs.
+This follow-up batch verifies a generator update that writes real Proteus resistor rotation fields, generates vertical endpoint stubs, and appends optional standalone visible wires for buses and bridge/junction links.
 
 ## Evidence Used
 
@@ -42,7 +42,7 @@ generator_version.txt
 ```text
 15/15 generated
 0 static validation issues
-pytest: 26 passed, 40 subtests passed
+pytest: 27 passed, 40 subtests passed
 ```
 
 Angle scan over generated outputs:
@@ -65,6 +65,26 @@ Angle scan over generated outputs:
 15_R_2R_LADDER_NETWORK                 [0, 0, 0, 0, -900, -900, -900, -900, -900]
 ```
 
+Standalone visual-wire counts:
+
+```text
+01_SIMPLE_LOOP                         0
+02_SERIES_CIRCUIT                      0
+03_PARALLEL_CIRCUIT                    2
+04_SERIES_PARALLEL_COMBO               2
+05_BASIC_VOLTAGE_DIVIDER               0
+06_MULTI_STEP_VOLTAGE_DIVIDER          0
+07_CURRENT_DIVIDER                     2
+08_DELTA_NETWORK                       1
+09_STAR_Y_NETWORK                      0
+10_DELTA_TO_STAR_SETUP                 1
+11_WHEATSTONE_BRIDGE                   2
+12_BALANCED_WHEATSTONE_BRIDGE          2
+13_UNBALANCED_WHEATSTONE_BRIDGE        2
+14_H_BRIDGE_RESISTOR_VERSION           2
+15_R_2R_LADDER_NETWORK                 1
+```
+
 ## Remaining Limitation
 
-This fixes horizontal-only resistor objects for 90-degree vertical layouts. Arbitrary diagonal resistor symbols and fully routed visible bus/junction geometry are still experimental and must not be treated as locked until a separate donor/evidence batch passes Proteus GUI open/save testing.
+This fixes horizontal-only resistor objects for locked 90-degree vertical layouts and adds explicit visible bus/junction wires when the JSON asks for them. Arbitrary diagonal resistor symbols and a fully automatic physical router are still experimental and must not be treated as locked until a separate donor/evidence batch passes Proteus GUI open/save testing.
