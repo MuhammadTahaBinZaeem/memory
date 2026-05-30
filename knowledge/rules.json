@@ -122,10 +122,10 @@
       "id": "R014",
       "title": "Dense resistor layouts are stretched before generation",
       "status": "confirmed_for_resistor_scope",
-      "confidence": 0.86,
+      "confidence": 0.9,
       "applies_to": ["Proteus 8.13", "resistor terminal V9 method"],
-      "evidence": ["user reported overlapped generated resistor circuits", "MAIN_RESISTOR_SAFE_LAYOUT_VGDVC_GUARD_20260530"],
-      "rule": "Treat manual component coordinates as placement hints. If repeated x/y positions are closer than the safe V9 grid, stretch them before emitting ROOT.DSN so terminal records, short wires, and resistor visual bodies do not overlap."
+      "evidence": ["user reported overlapped generated resistor circuits", "MAIN_RESISTOR_SAFE_LAYOUT_VGDVC_GUARD_20260530", "MAIN_RESISTOR_LOCKED_V9_SPACING_20260530"],
+      "rule": "Treat manual component coordinates as placement hints. If repeated x/y positions are closer than the safe V9 grid, stretch them before emitting ROOT.DSN so terminal records, short wires, and resistor visual bodies do not overlap. The current production safe grid is 2540000 internal units on both x and y."
     }
   ]
 }

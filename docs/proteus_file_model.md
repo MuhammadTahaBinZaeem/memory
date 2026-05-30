@@ -46,7 +46,7 @@ The current main generator patches this field for locked 90-degree orientations.
 
 `layout.visual_wires` is parsed but currently skipped by the production generator. Earlier generated standalone `WIRE` records passed static checks but were associated with user-reported VGDVC failures in parallel-and-later resistor cases. Keep routed bus/junction wire records experimental until a Proteus-created donor proves a VGDVC-safe standalone wire method.
 
-Manual component coordinates are accepted as placement hints, but the production resistor generator stretches dense repeated x/y positions to a safe grid before writing `ROOT.DSN`.
+Manual component coordinates are accepted as placement hints, but the production resistor generator stretches dense repeated x/y positions to a safe grid before writing `ROOT.DSN`. The current production safe grid is `2540000` internal units on both x and y. This keeps vertically oriented component/terminal groups farther apart while preserving the locked terminal-to-component offsets.
 
 ## Power And Ground Endpoint Rule
 
