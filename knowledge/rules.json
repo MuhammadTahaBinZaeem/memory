@@ -90,6 +90,15 @@
       "applies_to": ["Proteus 8.13", "resistor terminal V9 method"],
       "evidence": ["final/power_terminal_short_wire_method.md", "final/ground_terminal_short_wire_method.md", "PROTUESGEN_RESISTOR_V9_IMPLEMENTATION_20260530"],
       "rule": "For the locked resistor V9 method, use two-character labels such as V0 and G0. $TERPOWER is safe as a left endpoint replacement for $TERINPUT; $TERGROUND is safe as a right endpoint replacement for $TEROUTPUT."
+    },
+    {
+      "id": "R011",
+      "title": "Resistor visual rotation field",
+      "status": "confirmed_for_static_generation",
+      "confidence": 0.82,
+      "applies_to": ["Proteus 8.13", "resistor terminal V9 method"],
+      "evidence": ["public Proteus sample corpus scan", "REQUESTED_RESISTOR_NETWORKS_15_ORIENTED_STATIC_20260530"],
+      "rule": "In the V9 resistor visual record, the four bytes after the final model placement x/y pair store rotation as a signed tenths-of-degrees value in the low 16 bits. 0 is horizontal; -900 is vertical down. Vertical generation must rotate terminal/wire endpoint positions along the same axis."
     }
   ]
 }

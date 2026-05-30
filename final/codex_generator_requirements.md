@@ -40,7 +40,7 @@ capacitor
 inductor
 DC source
 AC source
-rotated resistor physical symbols
+arbitrary diagonal/routed resistor physical symbols
 long node labels such as GND or VCC
 long refs such as R10
 ```
@@ -267,9 +267,9 @@ capacitor
 inductor
 DC source
 AC source
-rotated resistor symbol
+arbitrary diagonal/routed resistor symbols
 variable-length terminal labels
 variable-length visible refs such as R10
 ```
 
-These are planned next milestones, not part of the current locked resistor + endpoint-terminal baseline.
+Horizontal and locked 90-degree vertical resistor symbols are part of the current resistor baseline. The listed items remain planned next milestones.

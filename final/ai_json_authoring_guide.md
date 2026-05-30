@@ -167,7 +167,7 @@ The right side is not one continuous wire. It contains resistors between junctio
 
 ### Mistake: Preserving visual shape instead of topology
 
-The generator currently does not guarantee exact visual rotation. The JSON must prioritize electrical topology.
+The JSON must prioritize electrical topology first. Use `visual.orientation_hint` only after the endpoint nodes are correct.
 
 Correct:
 
@@ -176,6 +176,12 @@ R2 connects N1 to N2
 ```
 
 Even if R2 appears vertical in the drawing.
+
+For a locked vertical symbol, add:
+
+```json
+"visual": {"orientation_hint": "vertical"}
+```
 
 ### Mistake: Using long labels
 

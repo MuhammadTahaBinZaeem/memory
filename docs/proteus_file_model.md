@@ -31,6 +31,17 @@ The generated records must preserve:
 - final terminator only at the last object
 - section pointers patched after final object-stream length is known
 
+## Resistor Orientation Field
+
+Public Proteus sample projects show that the resistor visual record stores rotation in the four bytes immediately after the final model placement `x/y` pair:
+
+```text
+00 00 00 00 = horizontal
+7c fc 00 00 = -900 tenths of a degree, vertical down
+```
+
+The current main generator patches this field for locked 90-degree orientations. For `visual.orientation_hint = "vertical"`, the first resistor pin remains at the component position and the second pin is generated at `y - 1270000`; the terminal and short-wire endpoint records are generated along the same vertical axis.
+
 ## Power And Ground Endpoint Rule
 
 Current supported labels:
@@ -48,4 +59,3 @@ $TEROUTPUT -> $TERGROUND  when ground is component.nodes[1]
 ```
 
 Long labels such as `VCC` and `GND` remain outside the locked v0.1 resistor generator until variable-length terminal labels are validated.
-

@@ -12,7 +12,7 @@
       "id": "Q002",
       "priority": "high",
       "question": "How are resistor, terminal, and short-wire coordinates represented in ROOT.DSN?",
-      "status": "resolved_for_horizontal_v9_resistor_records",
+      "status": "resolved_for_horizontal_and_90_degree_v9_resistor_records",
       "needed_for": ["layout_generation"]
     },
     {

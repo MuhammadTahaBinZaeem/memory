@@ -141,8 +141,8 @@ final byte length known
 ```text
 only resistor family is locked
 labels should remain two characters
-current visual symbols are horizontal
-physical rotated resistor support is not locked yet
+horizontal and 90-degree vertical resistor symbols are locked for static generation
+arbitrary diagonal/routed physical geometry is not locked yet
 capacitors are not locked yet
 inductors are not locked yet
 power/ground terminals are not locked yet

@@ -53,7 +53,26 @@ generator_version.txt
 pytest: 24 passed, 40 subtests passed
 ```
 
-## Important Limitation
+## Superseded Visual Limitation
 
 The generator still emits horizontal V9 resistor records. Topology is represented by repeated terminal labels, not exact drawn geometry. Proteus GUI validation is pending user screenshots/errors.
 
+This limitation was addressed in the follow-up oriented batch after the Proteus resistor angle field was identified.
+
+## Oriented Follow-Up Batch
+
+Generated in:
+
+```text
+D:/Coding/protuesgen/experiments/requested_resistor_networks_oriented_2026_05_30
+```
+
+Static results:
+
+```text
+15/15 generated
+0 static validation issues
+pytest: 26 passed, 40 subtests passed
+```
+
+The oriented batch emits real vertical resistor visual records (`-900` tenths angle field) for the requested circuits that naturally need vertical branches: simple loop, parallel/current-divider legs, voltage-divider stacks, star arms, Wheatstone/H-bridge branches, and R-2R ladder shunts.

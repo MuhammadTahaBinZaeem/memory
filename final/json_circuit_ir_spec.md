@@ -170,8 +170,8 @@ value     required string, resistor value such as 1k, 220R, 10k
           for the current stable visible field, compact values are safest
 
 nodes     required array of exactly two existing node ids
-          nodes[0] is left/input terminal for the V9 group
-          nodes[1] is right/output terminal for the V9 group
+          nodes[0] is the first/input endpoint for the V9 group
+          nodes[1] is the second/output endpoint for the V9 group
 
 visual    optional object
 ```
@@ -192,6 +192,15 @@ CDB should store the real value.
 Visible value may need compact representation if visual value field is fixed-width.
 For resistor-only v0.1, values like 1k..9k are safest.
 If values above 9k are needed, the generator may use compact visible labels while storing real CDB values.
+```
+
+Orientation rules:
+
+```text
+visual.orientation_hint may be horizontal, vertical, vertical_up, left, or an accepted alias.
+visual.angle_tenths may be one of -2700, -1800, -900, 0, 900, 1800, or 2700.
+vertical maps to -900 tenths of a degree in the resistor visual record.
+Only 90-degree rotations are locked. Arbitrary diagonal physical symbols remain experimental.
 ```
 
 ## layout object
@@ -230,8 +239,8 @@ Rules:
 ```text
 Every component should have a position.
 If a component is missing a position, set `layout.auto_place` to true so the generator may auto-place it and record that in manifest.json.
-Coordinates are for body center of the resistor visual object.
-Terminal and wire positions are generated relative to the resistor position using the locked V9 offsets.
+Coordinates are for the first resistor pin / first endpoint.
+Terminal and wire positions are generated relative to the resistor position and orientation using the locked V9 offsets.
 ```
 
 ## metadata object
@@ -246,7 +255,7 @@ Example:
   "source_image_sha256": "8f8f1327b8efc71473b541b1f0198e4871e47b30e75059260ad5e8781ff0a0a4",
   "human_description": "corrected 6-resistor two-loop circuit",
   "notes": [
-    "Vertical resistors in source are represented topologically by node labels; physical rotation not yet locked."
+    "Vertical resistor symbols are supported for locked 90-degree orientations; arbitrary diagonal routed geometry is still experimental."
   ]
 }
 ```
@@ -267,7 +276,7 @@ means:
 R2 connects node N1 to node N2.
 ```
 
-It does not matter whether the original drawing shows that resistor vertical, horizontal, angled, or curved. Until rotation support is locked, visual orientation is only a hint.
+The node list is still the electrical authority. `visual.orientation_hint` affects the drawn resistor direction and endpoint-stub placement for locked 90-degree orientations only.
 
 ## Validation rules
 

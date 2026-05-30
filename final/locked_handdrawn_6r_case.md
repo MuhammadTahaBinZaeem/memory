@@ -100,13 +100,11 @@ final/examples/handdrawn_6r_corrected.json
 
 A future generator must be able to read this JSON and generate a working project with the same topology.
 
-## Current visual limitation
+## Current visual status
 
 In the source image, R2, R4, and R5 are drawn vertically on the right side.
 
-The current locked V9 method represents them topologically by node labels, but the resistor symbols themselves may still be emitted as horizontal objects.
-
-This is acceptable for the locked resistor-only baseline because the goal here is correct graph generation and CDB/DSN validity. Physical rotated resistor symbols are a future milestone.
+The current V9 generator can now emit locked 90-degree vertical resistor symbols using `visual.orientation_hint = "vertical"`. The topology is still defined by node labels; arbitrary diagonal or fully routed picture-perfect geometry remains a later milestone.
 
 ## What makes this case final
 

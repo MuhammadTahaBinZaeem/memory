@@ -78,7 +78,7 @@
     "notes": [
       "Left side is one common node N0.",
       "Right side has distinct nodes N1, N2, N3, N4 separated by resistors.",
-      "Vertical resistors in the source are topology-correct by node labels; physical symbol rotation is not locked in V9 baseline."
+      "Vertical resistors use locked 90-degree orientation hints; topology remains defined by node labels."
     ]
   }
 }
