@@ -57,9 +57,19 @@ Use two-character labels only.
 Recommended labels:
 
 ```text
+V0, G0
 N0, N1, N2, N3, N4
 A1, A2, B1, B2, C1, C2
 M0, Z0
+```
+
+For current power/ground endpoint generation:
+
+```text
+Use V0 with kind=power for power endpoints.
+Use G0 with kind=ground for ground endpoints.
+Put V0 on component.nodes[0] when it should become $TERPOWER.
+Put G0 on component.nodes[1] when it should become $TERGROUND.
 ```
 
 Do not use long labels such as:
@@ -178,7 +188,13 @@ Wrong:
 Correct for current baseline:
 
 ```json
-{"id": "G0"}
+{"id": "G0", "kind": "ground"}
+```
+
+Correct power endpoint:
+
+```json
+{"id": "V0", "kind": "power"}
 ```
 
 ### Mistake: Missing node declarations
@@ -211,4 +227,6 @@ all components have exactly two nodes
 no hidden junction was collapsed through a resistor
 topology matches the circuit, not merely the drawing shape
 layout positions exist for every resistor
+V0 power endpoint, if used, is on nodes[0]
+G0 ground endpoint, if used, is on nodes[1]
 ```

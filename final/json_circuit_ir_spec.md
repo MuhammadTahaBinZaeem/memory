@@ -87,6 +87,8 @@ Example:
 
 ```json
 "nodes": [
+  {"id": "V0", "kind": "power"},
+  {"id": "G0", "kind": "ground"},
   {"id": "N0", "role": "left_common"},
   {"id": "N1", "role": "top_right"},
   {"id": "N2", "role": "middle_right"},
@@ -100,6 +102,7 @@ Required fields per node:
 ```text
 id      required string, exactly two ASCII characters for this baseline
 role    optional string
+kind    optional string: internal, power, ground
 ```
 
 Node label rules:
@@ -107,9 +110,27 @@ Node label rules:
 ```text
 Must be exactly two ASCII characters.
 Recommended pattern: capital letter + digit, such as N0, N1, A1, B2.
+Use V0 for current power endpoint tests and G0 for current ground endpoint tests.
 Avoid GND, VCC, OUT, IN1 until variable-length labels are validated.
 Do not define duplicate node ids.
 Every component endpoint must reference an existing node id.
+```
+
+## current power/ground endpoint support
+
+The main generator currently supports the locked short-wire endpoint methods:
+
+```text
+V0 with kind=power  -> $TERPOWER when used as component.nodes[0]
+G0 with kind=ground -> $TERGROUND when used as component.nodes[1]
+```
+
+Constraints:
+
+```text
+$TERPOWER is only locked for left endpoints because it replaces $TERINPUT.
+$TERGROUND is only locked for right endpoints because it replaces $TEROUTPUT.
+Standalone POWER_TERMINAL_BRIDGE and GROUND_TERMINAL_BRIDGE JSON components are not part of this v0.1 input yet.
 ```
 
 ## components array
@@ -199,6 +220,7 @@ Allowed layout modes for v0.1:
 ```text
 manual_component_positions
 branch_grid
+auto_grid
 ```
 
 For the first actual generator, `manual_component_positions` is safest.
@@ -207,7 +229,7 @@ Rules:
 
 ```text
 Every component should have a position.
-If a component is missing a position, the generator may auto-place it, but must record that in manifest.json.
+If a component is missing a position, set `layout.auto_place` to true so the generator may auto-place it and record that in manifest.json.
 Coordinates are for body center of the resistor visual object.
 Terminal and wire positions are generated relative to the resistor position using the locked V9 offsets.
 ```
@@ -265,7 +287,9 @@ all component types are RESISTOR
 all resistor nodes arrays have exactly two entries
 all resistor node references exist in nodes array
 layout exists
-component positions are provided or auto-placement is explicitly enabled
+component positions are provided or layout.auto_place is explicitly true
+power nodes, when used as generated power terminals, are on component.nodes[0]
+ground nodes, when used as generated ground terminals, are on component.nodes[1]
 ```
 
 ## Invalid examples

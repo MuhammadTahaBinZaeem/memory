@@ -14,6 +14,8 @@ Current supported object family:
 RESISTOR components
 input terminal objects
 output terminal objects
+power endpoint terminal objects on left V0 endpoints
+ground endpoint terminal objects on right G0 endpoints
 short wire objects between terminal and resistor pins
 CDB resistor records
 ```
@@ -57,7 +59,14 @@ left node  = component.nodes[0]
 right node = component.nodes[1]
 ```
 
-The terms input/output terminal here mean the two terminal object record families used by the V9 method. They do not yet mean power input/output ports or external connector components.
+The terms input/output terminal here mean the two terminal object record families used by the V9 method. Endpoint power/ground support is also now part of the main generator:
+
+```text
+left node V0 with kind=power   -> $TERPOWER endpoint replacing $TERINPUT
+right node G0 with kind=ground -> $TERGROUND endpoint replacing $TEROUTPUT
+```
+
+This is endpoint-attached support only. Standalone donor-derived power bridges are recorded separately and are not part of the v0.1 JSON component vocabulary.
 
 ## Node-label authority
 
@@ -111,11 +120,11 @@ The generator reads:
     "units": "proteus_internal"
   },
   "nodes": [
-    {"id": "N0"},
-    {"id": "N1"}
+    {"id": "V0", "kind": "power"},
+    {"id": "G0", "kind": "ground"}
   ],
   "components": [
-    {"ref": "R1", "type": "RESISTOR", "value": "1k", "nodes": ["N0", "N1"]}
+    {"ref": "R1", "type": "RESISTOR", "value": "1k", "nodes": ["V0", "G0"]}
   ],
   "layout": {
     "mode": "manual_component_positions",
@@ -139,7 +148,7 @@ component type: RESISTOR only
 Allowed examples:
 
 ```text
-nodes: N0, N1, A1, B2, M0, Z0
+nodes: V0, G0, N0, N1, A1, B2, M0, Z0
 refs:  R1, R2, R9, RA, RB, RC
 ```
 
@@ -168,6 +177,8 @@ type is RESISTOR
 nodes array has exactly two declared node ids
 layout exists
 position exists for every component or auto-placement is explicitly enabled
+power endpoint nodes use V0/kind=power on component.nodes[0]
+ground endpoint nodes use G0/kind=ground on component.nodes[1]
 ```
 
 After generation:
@@ -177,6 +188,7 @@ component_count_emitted_cdb == requested resistor count
 resistor_visual_count == requested resistor count
 input_terminal_count == requested resistor count
 output_terminal_count == requested resistor count
+power_terminal_count and ground_terminal_count match V0/G0 endpoint usage
 wire_count == requested resistor count * 2
 object_group_count == requested resistor count
 no premature final terminator

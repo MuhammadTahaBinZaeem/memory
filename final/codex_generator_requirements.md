@@ -24,6 +24,8 @@ arbitrary graph of RESISTOR components
 node labels as generated terminal labels
 one input terminal object per resistor left endpoint
 one output terminal object per resistor right endpoint
+endpoint-attached power terminal for left V0/kind=power endpoints
+endpoint-attached ground terminal for right G0/kind=ground endpoints
 short wire objects between terminals and resistor pins
 CDB resistor records
 blank E001 base
@@ -32,8 +34,8 @@ blank E001 base
 Not supported yet:
 
 ```text
-power terminal component
-ground terminal component
+standalone power terminal bridge component
+standalone ground terminal bridge component
 capacitor
 inductor
 DC source
@@ -102,6 +104,8 @@ component refs are exactly two ASCII characters
 component type is RESISTOR
 component nodes array has exactly two node ids
 component node ids are declared in nodes array
+power endpoint nodes use V0/kind=power on component.nodes[0]
+ground endpoint nodes use G0/kind=ground on component.nodes[1]
 layout object exists
 component positions exist for each component unless explicit auto placement is enabled
 ```
@@ -121,6 +125,13 @@ For each component in JSON order:
 6. create left wire object
 7. create right wire object
 8. create CDB resistor component record
+```
+
+For endpoint power/ground:
+
+```text
+component.nodes[0] == V0/kind=power  -> emit $TERPOWER instead of $TERINPUT
+component.nodes[1] == G0/kind=ground -> emit $TERGROUND instead of $TEROUTPUT
 ```
 
 ## Authority model
@@ -170,6 +181,8 @@ component_count_requested
 component_count_emitted_cdb
 component_count_emitted_dsn
 terminal_count
+power_terminal_count
+ground_terminal_count
 wire_count
 object_group_count
 terminator_validation
@@ -248,8 +261,8 @@ known limitations
 Do not add these as working features until separately validated:
 
 ```text
-power terminal
-ground terminal
+standalone power terminal bridge
+standalone ground terminal bridge
 capacitor
 inductor
 DC source
