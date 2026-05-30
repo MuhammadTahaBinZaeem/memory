@@ -135,6 +135,15 @@
       "applies_to": ["Proteus 8.13", "resistor terminal V9 method"],
       "evidence": ["MAIN_RESISTOR_LOCKED_V9_METHOD_AUDIT_20260530", "MAIN_RESISTOR_LOCKED_V9_SPACING_20260530", "user Proteus visual/no-error acceptance"],
       "rule": "Use src/proteusgen/resistor_v9.py as the main resistor generator. Do not reintroduce direct $TERPOWER resistor endpoints or standalone production visual wires. New component work starts with capacitor support."
+    },
+    {
+      "id": "R016",
+      "title": "Capacitor work stays temporary until Proteus accepts guarded diagnostics",
+      "status": "static_confirmed_pending_proteus_acceptance",
+      "confidence": 0.74,
+      "applies_to": ["Proteus 8.13", "capacitor experimental method"],
+      "evidence": ["capacitor V2/V3 VGDVC negative evidence", "CAPACITOR_V4_TEMP_STATIC_20260530"],
+      "rule": "Do not promote capacitor generation to the main generator until exact one-cap CDB and CAP_T02 object reproduction, same-length patching, coordinate translation, and at least one multi-cap case open in Proteus without VGDVC/library errors."
     }
   ]
 }

@@ -63,6 +63,13 @@
       "question": "Do the main resistor outputs survive formal Proteus 8.13 save-as/reopen and semantic comparison for all requested topologies?",
       "status": "user_visual_no_error_acceptance_received_current_scope_formal_save_reopen_diff_pending",
       "needed_for": ["resistor_generator_release_acceptance"]
+    },
+    {
+      "id": "Q010",
+      "priority": "high",
+      "question": "Which CAPACITOR_V4_TEMP_20260530 diagnostic is the first to fail or pass in Proteus 8.13?",
+      "status": "awaiting_user_proteus_test",
+      "needed_for": ["capacitor_generator_promotion"]
     }
   ]
 }

@@ -63,7 +63,19 @@
     "DC_VOLTAGE_SOURCE": {"status": "requested_not_yet_controlled", "category": "source"},
     "AC_VOLTAGE_SOURCE": {"status": "requested_not_yet_controlled", "category": "source"},
     "INDUCTOR": {"status": "requested_not_yet_controlled", "category": "passive"},
-    "CAPACITOR": {"status": "active_next_milestone_not_yet_controlled", "category": "passive"},
+    "CAPACITOR": {
+      "status": "temporary_v4_diagnostics_pending_proteus_test",
+      "category": "passive",
+      "proteus_names_observed": ["CAPACITOR", "CAP", "CAP10"],
+      "generation": {
+        "visual_authority": "ROOT.DSN",
+        "metadata_authority": "ROOT.CDB",
+        "requires_cdb": true,
+        "tested": false,
+        "locked": false,
+        "temporary_recipe": "CAP_T01/CAP_T02 exact guards before same-length ref/terminal patches, coordinate translation, and two-cap expansion"
+      }
+    },
     "LED": {"status": "found_in_corpus_not_controlled", "category": "display_indicator"},
     "CLOCK": {"status": "found_in_corpus_not_controlled", "category": "digital_source"},
     "LOGICPROBE": {"status": "found_in_corpus_not_controlled", "category": "instrument"},

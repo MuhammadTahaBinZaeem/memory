@@ -94,6 +94,17 @@ Evidence:
 - OBJECT DATA audit confirmed one `$TERPOWER` bridge, `$TERINPUT` resistor power endpoints, `$TERGROUND` right ground endpoints, and zero emitted standalone visual wires.
 - The user reported that the checked generated projects gave no errors and matched the requested circuits.
 
+## D010: Keep capacitor in temporary diagnostics until Proteus acceptance
+
+Decision: capacitor generation is not main yet. The first capacitor pass uses a temporary V4 diagnostic pack with exact donor reproduction guards before any patched or duplicated capacitor record is considered.
+
+Evidence:
+
+- Previous V2/V3 capacitor attempts produced Proteus VGDVC/library errors and remain negative evidence.
+- The V4 script verifies that generated one-cap `ROOT.CDB` matches CAP_T01 byte-for-byte.
+- The V4 script verifies that a generated terminal-cap-terminal object chunk matches CAP_T02 byte-for-byte.
+- Static generation produced five ordered diagnostics with zero static validation issues, but manual Proteus testing is still pending.
+
 ## Inactive / removed
 
 The earlier post-CEP decisions about large speculative Project 2 Level 1 packs, no-DLD packs, and big-leap circuit assembly have been removed from active memory. Rebuild that direction only with explicit user guidance.

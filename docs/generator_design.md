@@ -10,7 +10,7 @@ Version 0 target:
 - locked V9 terminal-based resistor networks
 - V0/G0/internal nets represented using terminals
 - resistor values and refs stored consistently in ROOT.CDB
-- capacitor is the next active component family
+- capacitor is in the temporary V4 diagnostic lane, pending Proteus acceptance
 
 ## High-level flow
 
@@ -95,6 +95,16 @@ Priority after locked resistor generator:
 8. logic probe
 9. 74xx basic gates
 10. 7-segment and decoder circuits
+
+Current capacitor gate:
+
+```text
+D:/Coding/protuesgen/tools/proteus_generation/2026-05-30/generate_capacitor_v4_temp.py
+D:/Coding/protuesgen/experiments/capacitor_v4_temp_2026_05_30/
+```
+
+The V4 capacitor work is deliberately temporary. It must pass the ordered
+Proteus diagnostics before any capacitor code moves into the main generator.
 
 ## Non-goals for v0
 
