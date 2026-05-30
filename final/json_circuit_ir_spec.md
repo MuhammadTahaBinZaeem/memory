@@ -118,18 +118,20 @@ Every component endpoint must reference an existing node id.
 
 ## current power/ground endpoint support
 
-The main generator currently supports the locked short-wire endpoint methods:
+The main generator uses the locked power-bridge plus ground short-wire method:
 
 ```text
-V0 with kind=power  -> $TERPOWER when used as component.nodes[0]
+V0 with kind=power  -> one donor-derived $TERPOWER -> $TEROUTPUT(V0) bridge
+V0 resistor endpoint -> ordinary $TERINPUT(V0), normally on component.nodes[0]
 G0 with kind=ground -> $TERGROUND when used as component.nodes[1]
 ```
 
 Constraints:
 
 ```text
-$TERPOWER is only locked for left endpoints because it replaces $TERINPUT.
-$TERGROUND is only locked for right endpoints because it replaces $TEROUTPUT.
+Do not emit $TERPOWER directly on resistor endpoints in the main generator.
+$TERPOWER appears only in the donor-derived bridge cluster.
+$TERGROUND is only locked for right endpoints because it replaces $TEROUTPUT and uses the normal short wire to the resistor pin.
 Standalone POWER_TERMINAL_BRIDGE and GROUND_TERMINAL_BRIDGE JSON components are not part of this v0.1 input yet.
 ```
 
@@ -220,10 +222,7 @@ Baseline layout format:
     "R4": {"x": -2540000, "y": 2032000},
     "R5": {"x": -2540000, "y": 508000},
     "R6": {"x": -6350000, "y": -1016000}
-  },
-  "visual_wires": [
-    {"x1": -6350000, "y1": 5080000, "x2": -2540000, "y2": 5080000}
-  ]
+  }
 }
 ```
 
@@ -244,7 +243,7 @@ Every component should have a position.
 If a component is missing a position, set `layout.auto_place` to true so the generator may auto-place it and record that in manifest.json.
 Coordinates are for the first resistor pin / first endpoint.
 Terminal and wire positions are generated relative to the resistor position and orientation using the locked V9 offsets.
-layout.visual_wires may be used for explicit visible buses or bridge/junction links. These are drawing hints; component nodes remain the electrical authority.
+layout.visual_wires may appear in input JSON as future drawing hints, but production currently skips standalone visual wires until a VGDVC-safe Proteus-created donor is validated. Component nodes remain the electrical authority.
 ```
 
 ## metadata object
@@ -301,7 +300,7 @@ all resistor nodes arrays have exactly two entries
 all resistor node references exist in nodes array
 layout exists
 component positions are provided or layout.auto_place is explicitly true
-power nodes, when used as generated power terminals, are on component.nodes[0]
+power nodes use the donor-derived bridge; powered resistor endpoints stay ordinary input terminals
 ground nodes, when used as generated ground terminals, are on component.nodes[1]
 ```
 

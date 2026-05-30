@@ -177,7 +177,7 @@ type is RESISTOR
 nodes array has exactly two declared node ids
 layout exists
 position exists for every component or auto-placement is explicitly enabled
-power endpoint nodes use V0/kind=power on component.nodes[0]
+power nodes use V0/kind=power and are connected through one donor-derived $TERPOWER -> $TEROUTPUT(V0) bridge
 ground endpoint nodes use G0/kind=ground on component.nodes[1]
 ```
 
@@ -188,8 +188,9 @@ component_count_emitted_cdb == requested resistor count
 resistor_visual_count == requested resistor count
 input_terminal_count == requested resistor count
 output_terminal_count == requested resistor count
-power_terminal_count and ground_terminal_count match V0/G0 endpoint usage
-wire_count == requested resistor count * 2
+power_terminal_count == number of donor-derived power bridges
+ground_terminal_count matches right-endpoint G0 usage
+wire_count == requested resistor count * 2 + power bridge count
 object_group_count == requested resistor count
 no premature final terminator
 final object has final terminator

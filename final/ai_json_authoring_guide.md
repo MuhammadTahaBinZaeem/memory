@@ -68,7 +68,7 @@ For current power/ground endpoint generation:
 ```text
 Use V0 with kind=power for power endpoints.
 Use G0 with kind=ground for ground endpoints.
-Put V0 on component.nodes[0] when it should become $TERPOWER.
+Put V0 on component.nodes[0] when it should connect to the shared power node; the generator keeps the resistor endpoint as $TERINPUT and emits one donor-derived $TERPOWER -> $TEROUTPUT(V0) bridge.
 Put G0 on component.nodes[1] when it should become $TERGROUND.
 ```
 
@@ -183,7 +183,7 @@ For a locked vertical symbol, add:
 "visual": {"orientation_hint": "vertical"}
 ```
 
-If the physical drawing needs a visible bus, rail, bridge link, or delta closure after the component nodes are correct, add explicit `layout.visual_wires` entries. Do not use visual wires to invent electrical connectivity that is not already represented by shared node ids.
+If the physical drawing needs a visible bus, rail, bridge link, or delta closure after the component nodes are correct, remember that production currently skips standalone `layout.visual_wires` until a VGDVC-safe donor is validated. Do not use visual wires to invent electrical connectivity that is not already represented by shared node ids.
 
 ### Mistake: Using long labels
 
@@ -235,7 +235,7 @@ all components have exactly two nodes
 no hidden junction was collapsed through a resistor
 topology matches the circuit, not merely the drawing shape
 layout positions exist for every resistor
-optional layout.visual_wires match intended visible bus or bridge links
+optional layout.visual_wires are only future drawing hints and will be skipped by production for now
 V0 power endpoint, if used, is on nodes[0]
 G0 ground endpoint, if used, is on nodes[1]
 ```

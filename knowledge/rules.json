@@ -86,10 +86,10 @@
       "id": "R010",
       "title": "Power and ground endpoint terminals are label-width constrained",
       "status": "confirmed_for_resistor_scope",
-      "confidence": 0.88,
+      "confidence": 0.9,
       "applies_to": ["Proteus 8.13", "resistor terminal V9 method"],
-      "evidence": ["final/power_terminal_short_wire_method.md", "final/ground_terminal_short_wire_method.md", "PROTUESGEN_RESISTOR_V9_IMPLEMENTATION_20260530"],
-      "rule": "For the locked resistor V9 method, use two-character labels such as V0 and G0. $TERPOWER is safe as a left endpoint replacement for $TERINPUT; $TERGROUND is safe as a right endpoint replacement for $TEROUTPUT."
+      "evidence": ["final/power_terminal_output_bridge_method.md", "final/ground_terminal_short_wire_method.md", "MAIN_POWER_BRIDGE_RESISTOR_15_20260530"],
+      "rule": "For the locked resistor V9 method, use two-character labels such as V0 and G0. Power bridge labels and resistor terminal labels remain two-character; $TERGROUND is safe as a right endpoint replacement for $TEROUTPUT."
     },
     {
       "id": "R011",
@@ -102,12 +102,30 @@
     },
     {
       "id": "R012",
-      "title": "Standalone visual wires may extend resistor layouts",
-      "status": "confirmed_for_static_generation",
-      "confidence": 0.78,
+      "title": "Standalone visual wires are disabled in production resistor generation",
+      "status": "blocked_pending_safe_wire_donor",
+      "confidence": 0.84,
       "applies_to": ["Proteus 8.13", "resistor terminal V9 method"],
-      "evidence": ["REQUESTED_RESISTOR_NETWORKS_15_ORIENTED_VISUAL_WIRES_STATIC_20260530"],
-      "rule": "After resistor endpoint groups, the generator may append standalone WIRE records for explicit layout.visual_wires while preserving one final object-stream terminator. These wires provide visible bus/junction geometry and do not replace the CircuitIR component node topology."
+      "evidence": ["REQUESTED_RESISTOR_NETWORKS_15_ORIENTED_VISUAL_WIRES_STATIC_20260530", "user reported VGDVC.dll errors on parallel-and-later visual-wire cases", "MAIN_RESISTOR_SAFE_LAYOUT_VGDVC_GUARD_20260530"],
+      "rule": "Do not emit standalone layout.visual_wires in the production resistor generator. Parse and record them as skipped until a Proteus-created donor establishes VGDVC-safe standalone wire records."
+    },
+    {
+      "id": "R013",
+      "title": "Power nodes use donor-derived output bridge",
+      "status": "confirmed_for_resistor_scope",
+      "confidence": 0.94,
+      "applies_to": ["Proteus 8.13", "resistor terminal V9 method"],
+      "evidence": ["final/power_bridge_ground_shortwire_method.md", "MAIN_R21_POWER_BRIDGE_REPRO_20260530", "MAIN_POWER_BRIDGE_RESISTOR_15_20260530", "MAIN_RESISTOR_LOCKED_V9_METHOD_AUDIT_20260530"],
+      "rule": "The main resistor generator must emit one donor-derived $TERPOWER -> $TEROUTPUT(V0) bridge for the power node. Powered resistor endpoints stay ordinary $TERINPUT(V0) terminals so same-name terminal topology connects them to the bridge."
+    },
+    {
+      "id": "R014",
+      "title": "Dense resistor layouts are stretched before generation",
+      "status": "confirmed_for_resistor_scope",
+      "confidence": 0.86,
+      "applies_to": ["Proteus 8.13", "resistor terminal V9 method"],
+      "evidence": ["user reported overlapped generated resistor circuits", "MAIN_RESISTOR_SAFE_LAYOUT_VGDVC_GUARD_20260530"],
+      "rule": "Treat manual component coordinates as placement hints. If repeated x/y positions are closer than the safe V9 grid, stretch them before emitting ROOT.DSN so terminal records, short wires, and resistor visual bodies do not overlap."
     }
   ]
 }

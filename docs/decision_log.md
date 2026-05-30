@@ -52,6 +52,36 @@ Reason:
 - It has clean ROOT.DSN version fields.
 - It has minimal ROOT.CDB.
 
+## D006: Keep composed 74HC08 rendering gated on a clean D05 oracle
+
+Decision: expose the AND reference circuit in CircuitIR and generate only validated whole-template outputs until `HC08_D05_exact_picture_manual_control.pdsprj` is supplied and passes Proteus 8.13 comparison testing.
+
+Evidence:
+
+- D01-D03 are clean donor projects but do not include the target pull-up/pull-down resistor rails.
+- The previous file labelled `G04_FINAL_picture_circuit_full_cdb` is byte-equivalent to D03 and is not the target circuit.
+- Arbitrary `ROOT.DSN` composition was the suspected source of prior ISIS failures.
+
+## D007: Use donor-derived power bridge for resistor V9 power nodes
+
+Decision: the main resistor generator must connect power with one donor-derived `$TERPOWER -> $TEROUTPUT(V0)` bridge and leave powered resistor endpoints as ordinary `$TERINPUT(V0)` terminals. Ground stays as `$TERGROUND(G0)` on right endpoints with the normal short wire.
+
+Evidence:
+
+- `memory/final/power_bridge_ground_shortwire_method.md` records the user-confirmed clean 6R and R21 bridge/ground attempts.
+- The promoted generator reproduces `CLEAN_T02_R21_POWER_BRIDGE_GROUND_SHORTWIRE` `ROOT.DSN` and `ROOT.CDB` byte-for-byte.
+- The regenerated 15 requested resistor circuits passed static validation and guarded Proteus 8.13 Wine open-smoke checks without early loader exits.
+
+## D008: Disable standalone visual wires and stretch dense resistor layouts
+
+Decision: production resistor generation must skip `layout.visual_wires` and stretch dense manual component coordinates to the safe V9 grid until standalone wire records are validated from a Proteus-created donor.
+
+Evidence:
+
+- The user reported VGDVC.dll failures beginning with the parallel generated circuit, matching the first requested cases that emitted experimental standalone visual wires.
+- The safe-layout batch generated all 15 requested resistor circuits with `visual_wire_count=0`, recorded skipped visual wires in manifests, and stretched dense positions where required.
+- All 15 safe-layout outputs stayed alive through guarded Proteus 8.13 Wine open-smoke and none of the captured stderr logs contained `VGDVC`.
+
 ## Inactive / removed
 
 The earlier post-CEP decisions about large speculative Project 2 Level 1 packs, no-DLD packs, and big-leap circuit assembly have been removed from active memory. Rebuild that direction only with explicit user guidance.

@@ -104,7 +104,7 @@ component refs are exactly two ASCII characters
 component type is RESISTOR
 component nodes array has exactly two node ids
 component node ids are declared in nodes array
-power endpoint nodes use V0/kind=power on component.nodes[0]
+power nodes use V0/kind=power and are connected through one donor-derived $TERPOWER -> $TEROUTPUT(V0) bridge
 ground endpoint nodes use G0/kind=ground on component.nodes[1]
 layout object exists
 component positions exist for each component unless explicit auto placement is enabled
@@ -130,7 +130,8 @@ For each component in JSON order:
 For endpoint power/ground:
 
 ```text
-component.nodes[0] == V0/kind=power  -> emit $TERPOWER instead of $TERINPUT
+if any node is V0/kind=power -> emit one donor-derived $TERPOWER -> $TEROUTPUT(V0) bridge
+component.nodes[0] == V0/kind=power  -> keep ordinary $TERINPUT(V0) on the resistor endpoint
 component.nodes[1] == G0/kind=ground -> emit $TERGROUND instead of $TEROUTPUT
 ```
 

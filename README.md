@@ -9,7 +9,9 @@ Current target:
 - No modification of Proteus executables
 - No license circumvention
 - Generator input language: CircuitIR JSON
-- Initial supported generation domain: terminal-based resistor networks
+- Current generated domain: V9 terminal-based resistor graphs from E001
+- Current power/ground support: one donor-derived `$TERPOWER -> $TEROUTPUT(V0)` bridge feeds powered `V0` input terminals; `G0` right endpoints become `$TERGROUND` with the normal short-wire-to-pin method
+- Current resistor visual support: horizontal and 90-degree vertical records through `visual.orientation_hint`; `layout.visual_wires` is parsed but skipped in production until a safe donor is validated
 
 The repo is designed so Codex or another coding agent can read the knowledge files, schemas, and docs to build the validator/generator.
 
@@ -35,5 +37,6 @@ docs/        architecture, file model, validator/generator design
 schemas/     JSON schemas for CircuitIR and feedback
 prompts/     prompts for converting natural language into CircuitIR
 experiments/ experiment protocols and phase notes
-src/         future Python package
+fixtures/    clean Proteus fixtures and donors when mirrored locally
+src/         deterministic Python package in the active generator repo
 ```

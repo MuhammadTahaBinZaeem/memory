@@ -44,9 +44,9 @@ The current main generator patches this field for locked 90-degree orientations.
 
 ## Standalone Visual Wires
 
-The current generator also supports optional `layout.visual_wires` entries. These create standalone visible `WIRE` records after the resistor endpoint groups while preserving one final object-stream terminator.
+`layout.visual_wires` is parsed but currently skipped by the production generator. Earlier generated standalone `WIRE` records passed static checks but were associated with user-reported VGDVC failures in parallel-and-later resistor cases. Keep routed bus/junction wire records experimental until a Proteus-created donor proves a VGDVC-safe standalone wire method.
 
-Use these records for drawn buses and comparison links such as parallel rails, bridge cross-links, delta closure, and R-2R ladder bus segments. They are drawing geometry only; the component `nodes` arrays remain the electrical/topological authority.
+Manual component coordinates are accepted as placement hints, but the production resistor generator stretches dense repeated x/y positions to a safe grid before writing `ROOT.DSN`.
 
 ## Power And Ground Endpoint Rule
 
@@ -57,11 +57,14 @@ V0 = power
 G0 = ground
 ```
 
-Current safe terminal substitutions:
+Current safe method:
 
 ```text
-$TERINPUT  -> $TERPOWER   when power is component.nodes[0]
-$TEROUTPUT -> $TERGROUND  when ground is component.nodes[1]
+Power node V0 -> one donor-derived $TERPOWER -> $TEROUTPUT(V0) bridge
+V0 resistor endpoints -> ordinary $TERINPUT(V0) records
+G0 resistor endpoints -> $TERGROUND only when the ground node is component.nodes[1]
 ```
+
+The older pure short-wire power endpoint method is not the main generator behavior. The preferred working method is the user-confirmed donor bridge from `power_terminal_bridge_donor.pdsprj`; ground remains the short-wire endpoint method.
 
 Long labels such as `VCC` and `GND` remain outside the locked v0.1 resistor generator until variable-length terminal labels are validated.
