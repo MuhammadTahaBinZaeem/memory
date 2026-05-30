@@ -7,9 +7,10 @@ The generator is deterministic Python code. It consumes validated CircuitIR and 
 Version 0 target:
 
 - Proteus 8.13
-- terminal-based resistor networks
-- VCC/GND/INTERNAL/OUTPUT nets represented using terminals
-- resistor values and refs stored consistently
+- locked V9 terminal-based resistor networks
+- V0/G0/internal nets represented using terminals
+- resistor values and refs stored consistently in ROOT.CDB
+- capacitor is the next active component family
 
 ## High-level flow
 
@@ -35,6 +36,26 @@ For Proteus 8.13, based on current tests:
 - resistor reference names: ROOT.CDB
 - PWRRAILS.DAT: copy unchanged for v0
 
+## Current locked generator
+
+The resistor generator is the current main production path in the active code repo. It is exposed by:
+
+```text
+proteusgen generate-resistors
+python generate_from_json.py
+```
+
+Locked behavior:
+
+```text
+resistor connectivity = V9 input/output terminal labels
+power = one donor-derived $TERPOWER -> $TEROUTPUT(V0) bridge
+powered resistor endpoints = ordinary $TERINPUT(V0)
+ground = $TERGROUND(G0) right endpoint with normal short wire
+standalone visual wires = skipped in production
+safe grid = 2540000 internal units on x and y
+```
+
 ## Layout strategy for v0
 
 Use terminal-based branches.
@@ -45,7 +66,7 @@ Each resistor branch should be represented as:
 terminal NET_A -- short connection -- resistor REF VALUE -- short connection -- terminal NET_B
 ```
 
-The exact reusable branch template is still pending the 60-test results.
+The reusable resistor branch template is locked for the current resistor scope.
 
 ## Component expansion strategy
 
@@ -62,12 +83,12 @@ Enable a part only after it has:
 
 ## Future supported component groups
 
-Priority after resistor generator v0:
+Priority after locked resistor generator:
 
-1. DC voltage source
-2. AC voltage source
-3. capacitor
-4. inductor
+1. capacitor
+2. inductor
+3. DC voltage source
+4. AC voltage source
 5. LED
 6. switch / DIP switch
 7. clock

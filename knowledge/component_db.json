@@ -2,7 +2,7 @@
   "schema_version": "0.1",
   "components": {
     "RESISTOR": {
-      "status": "partially_supported",
+      "status": "locked_main_generator_current_scope",
       "category": "passive",
       "proteus_names_observed": ["RESISTOR", "RES"],
       "pins": [
@@ -15,7 +15,9 @@
         "requires_cdb": true,
         "values_authority": "ROOT.CDB",
         "refs_authority": "ROOT.CDB",
-        "tested": true
+        "tested": true,
+        "locked": true,
+        "supported_recipe": "V9 terminal/resistor/wire groups from E001 plus donor-derived power bridge and ground short-wire endpoint"
       },
       "notes": [
         "Topology can be built with terminal labels around resistor pins.",
@@ -40,13 +42,14 @@
       "label_authority": "ROOT.DSN"
     },
     "POWER_TERMINAL": {
-      "status": "partially_supported",
+      "status": "generation_ready_donor_bridge",
       "category": "terminal",
       "proteus_marker": "$TERPOWER",
       "visual_authority": "ROOT.DSN",
       "requires_cdb": false,
       "label_authority": "ROOT.DSN",
-      "default_net_expected": "VCC"
+      "default_net_expected": "V0",
+      "supported_recipe": "one donor-derived $TERPOWER -> $TEROUTPUT(V0) bridge from power_terminal_bridge_donor.pdsprj"
     },
     "GROUND_TERMINAL": {
       "status": "partially_supported",
@@ -60,7 +63,7 @@
     "DC_VOLTAGE_SOURCE": {"status": "requested_not_yet_controlled", "category": "source"},
     "AC_VOLTAGE_SOURCE": {"status": "requested_not_yet_controlled", "category": "source"},
     "INDUCTOR": {"status": "requested_not_yet_controlled", "category": "passive"},
-    "CAPACITOR": {"status": "requested_not_yet_controlled", "category": "passive"},
+    "CAPACITOR": {"status": "active_next_milestone_not_yet_controlled", "category": "passive"},
     "LED": {"status": "found_in_corpus_not_controlled", "category": "display_indicator"},
     "CLOCK": {"status": "found_in_corpus_not_controlled", "category": "digital_source"},
     "LOGICPROBE": {"status": "found_in_corpus_not_controlled", "category": "instrument"},

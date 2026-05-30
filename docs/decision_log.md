@@ -83,6 +83,17 @@ Evidence:
 - All 15 safe-layout outputs stayed alive through guarded Proteus 8.13 Wine open-smoke and none of the captured stderr logs contained `VGDVC`.
 - After user visual acceptance, vertical safe spacing was increased from `1524000` to `2540000` internal units so stacked divider components have more distance between component/terminal groups without changing terminal-to-component offsets.
 
+## D009: Lock resistor generator as the main generator path
+
+Decision: the spacing-adjusted V9 resistor generator is the main accepted resistor generator for the current scope. Development now moves to capacitor support.
+
+Evidence:
+
+- The main CLI path imports `src/proteusgen/resistor_v9.py`.
+- The 15 spacing-adjusted locked-method outputs generated with zero static validation issues.
+- OBJECT DATA audit confirmed one `$TERPOWER` bridge, `$TERINPUT` resistor power endpoints, `$TERGROUND` right ground endpoints, and zero emitted standalone visual wires.
+- The user reported that the checked generated projects gave no errors and matched the requested circuits.
+
 ## Inactive / removed
 
 The earlier post-CEP decisions about large speculative Project 2 Level 1 packs, no-DLD packs, and big-leap circuit assembly have been removed from active memory. Rebuild that direction only with explicit user guidance.

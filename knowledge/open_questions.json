@@ -54,8 +54,15 @@
       "id": "Q008",
       "priority": "high_later",
       "question": "What controlled one-component tests are required for DC source, AC source, inductor, capacitor, LED, switch, clock, logic probe, and basic 74xx ICs?",
-      "status": "after_resistor_v0",
+      "status": "active_for_capacitor_first",
       "needed_for": ["component_expansion"]
+    },
+    {
+      "id": "Q009",
+      "priority": "medium",
+      "question": "Do the main resistor outputs survive formal Proteus 8.13 save-as/reopen and semantic comparison for all requested topologies?",
+      "status": "user_visual_no_error_acceptance_received_current_scope_formal_save_reopen_diff_pending",
+      "needed_for": ["resistor_generator_release_acceptance"]
     }
   ]
 }

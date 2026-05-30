@@ -126,6 +126,15 @@
       "applies_to": ["Proteus 8.13", "resistor terminal V9 method"],
       "evidence": ["user reported overlapped generated resistor circuits", "MAIN_RESISTOR_SAFE_LAYOUT_VGDVC_GUARD_20260530", "MAIN_RESISTOR_LOCKED_V9_SPACING_20260530"],
       "rule": "Treat manual component coordinates as placement hints. If repeated x/y positions are closer than the safe V9 grid, stretch them before emitting ROOT.DSN so terminal records, short wires, and resistor visual bodies do not overlap. The current production safe grid is 2540000 internal units on both x and y."
+    },
+    {
+      "id": "R015",
+      "title": "Resistor generator is locked as main for current scope",
+      "status": "locked_current_scope",
+      "confidence": 0.95,
+      "applies_to": ["Proteus 8.13", "resistor terminal V9 method"],
+      "evidence": ["MAIN_RESISTOR_LOCKED_V9_METHOD_AUDIT_20260530", "MAIN_RESISTOR_LOCKED_V9_SPACING_20260530", "user Proteus visual/no-error acceptance"],
+      "rule": "Use src/proteusgen/resistor_v9.py as the main resistor generator. Do not reintroduce direct $TERPOWER resistor endpoints or standalone production visual wires. New component work starts with capacitor support."
     }
   ]
 }

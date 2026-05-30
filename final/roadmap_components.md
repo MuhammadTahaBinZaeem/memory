@@ -9,7 +9,10 @@ RESISTOR: two-terminal, CDB-backed, V9 linked terminal/resistor/wire group
 POWER_TERMINAL: working with two locked methods
 GROUND_TERMINAL: working with short-wire endpoint method only
 PREFERRED_POWER_GROUND_COMBO: power donor bridge + ground short-wire endpoint
+ACTIVE_NEXT_COMPONENT: capacitor
 ```
+
+Resistor generation is locked for the current scope in the active generator repo. Use the spacing-adjusted V9 method as main; do not return to direct `$TERPOWER` resistor endpoints or standalone production visual wires.
 
 ## Power terminal status
 
