@@ -1,5 +1,9 @@
 # Requested Resistor Networks Oriented, 2026-05-30
 
+Status: **superseded**.
+
+This batch proved the resistor rotation field, but it is not the current production method. It emitted direct power endpoint markers and standalone visual wires. The current locked method is recorded in `experiments/main_resistor_locked_v9_method_2026-05-30.md`.
+
 ## Purpose
 
 The user correctly objected that the first 15 requested resistor-network batch still emitted horizontal resistor symbols, so bridge/star/ladder layouts were not visually representative.
